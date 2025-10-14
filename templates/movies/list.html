@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Movies — CineHub{% endblock %}
+{% block content %}
+  <h1>Movies</h1>
+  {% if movies %}
+    <ul class="list">
+      {% for m in movies %}
+        <li>
+          <strong>{{ m.title }}</strong> ({{ m.year }}) — rating: {{ m.rating }}
+          {% if m.archived %}<em class="archived">(archived)</em>{% endif %}
+          — <a href="{{ url_for('get_movie_html', id=m.id) }}">details</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No movies yet. Try creating some via <a href="/docs">/docs</a>.</p>
+  {% endif %}
+{% endblock %}
