@@ -14,7 +14,7 @@ def movies_html(request: Request):
     movies = list(_db.values())
     return templates.TemplateResponse("movies/list.html", {"request": request, "movies": movies})
 
-@html_router.get("/{id}/html", response_class=HTMLResponse, summary="Render movie details", name="get_movie_html")
+@html_router.get("/{id:int}/html", response_class=HTMLResponse, summary="Render movie details", name="get_movie_html")
 def get_movie_html(id: int, request: Request):
     movie = _db.get(id)
     if not movie:

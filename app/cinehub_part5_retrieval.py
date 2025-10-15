@@ -21,7 +21,7 @@ def create_movie(payload: MovieCreate) -> MovieOut:
     _db[mid] = movie
     return movie
 
-@movies_router.put("/{id}", response_model=MovieOut, summary="Update a movie by ID (partial fields allowed)")
+@movies_router.put("/{id:int}", response_model=MovieOut, summary="Update a movie by ID (partial fields allowed)")
 def update_movie(
     id: int = Path(..., ge=0, description="Movie ID (>=0)"),
     payload: MovieUpdate = None
@@ -42,7 +42,7 @@ def update_movie(
 def list_movies() -> List[MovieOut]:
     return [m for m in _db.values() if not m.archived]
 
-@movies_router.get("/{id}", response_model=MovieOut, summary="Get movie by ID with error handling")
+@movies_router.get("/{id:int}", response_model=MovieOut, summary="Get movie by ID with error handling")
 def get_movie(id: int = Path(..., description="Movie ID")) -> MovieOut:
     if id < 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID")
@@ -53,7 +53,7 @@ def get_movie(id: int = Path(..., description="Movie ID")) -> MovieOut:
         raise HTTPException(status_code=status.HTTP_410_GONE, detail="Movie archived")
     return movie
 
-@movies_router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT, summary="Archive (soft-delete) a movie")
+@movies_router.delete("/{id:int}", status_code=status.HTTP_204_NO_CONTENT, summary="Archive (soft-delete) a movie")
 def delete_movie(id: int = Path(..., description="Movie ID")) -> None:
     if id < 0:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid ID")

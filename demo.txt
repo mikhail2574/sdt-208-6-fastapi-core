@@ -1,0 +1,7 @@
+curl -X POST http://localhost:8000/movies/ \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Inception","rating":8.8,"year":2010}'
+
+curl -X POST http://localhost:8000/movies/ \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Inception","rating":8.8,"year":2010, "desc":"some horror description"}'
